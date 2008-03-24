@@ -94,6 +94,19 @@ class FriendFeed(object):
         """
         return self._fetch_feed("/api/feed/home", **kwargs)
 
+    def search(self, q, **kwargs):
+        """Searches over entries in FriendFeed.
+
+        If the request is authenticated, the default scope is over all of the
+        entries in the authenticated user's Friends Feed. If the request is
+        not authenticated, the default scope is over all public entries.
+
+        The query syntax is the same syntax as
+        http://friendfeed.com/advancedsearch
+        """
+        kwargs["q"] = q
+        return self._fetch_feed("/api/feed/search", **kwargs)
+
     def publish_message(self, message, **kwargs):
         """Publishes the given message to the authenticated user's feed.
 
@@ -231,13 +244,14 @@ class FriendFeed(object):
 def _example():
     # Fill in a nickname and a valid remote key below for authenticated
     # actions like posting an entry and reading a protected feed
-    #session = FriendFeed(auth_nickname=nickname, auth_key=remote_key)
+    # session = FriendFeed(auth_nickname=nickname, auth_key=remote_key)
     session = FriendFeed()
 
     feed = session.fetch_public_feed()
-    # feed = fetch_user_feed("bret")
-    # feed = fetch_user_feed("paul", service="twitter")
-    # feed = fetch_multi_user_feed(["bret", "paul", "jim"])
+    # feed = session.fetch_user_feed("bret")
+    # feed = session.fetch_user_feed("paul", service="twitter")
+    # feed = session.fetch_multi_user_feed(["bret", "paul", "jim"])
+    # feed = session.search("who:bret friendfeed")
     for entry in feed["entries"]:
         print entry["published"].strftime("%m/%d/%Y"), entry["title"]
 

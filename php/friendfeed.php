@@ -75,6 +75,19 @@ class FriendFeed {
 	return $this->fetch_feed("/api/feed/home", $service, $start, $num);
     }
 
+    // Searches over entries in FriendFeed.
+    //
+    // If the request is authenticated, the default scope is over all of the
+    // entries in the authenticated user's Friends Feed. If the request is
+    // not authenticated, the default scope is over all public entries.
+    //
+    // The query syntax is the same syntax as
+    // http://friendfeed.com/advancedsearch
+    function search($query, $service=null, $start=0, $num=30) {
+	return $this->fetch_feed("/api/feed/search", $service, $start, $num,
+				 null, $query);
+    }
+
     // Publishes the given textual message to the authenticated user's feed.
     //
     // See publish_link for additional options.
@@ -123,7 +136,7 @@ class FriendFeed {
 	    }
 	}
 
-	$feed = $this->fetch_feed("/api/share", null, null, null, null,
+	$feed = $this->fetch_feed("/api/share", null, null, null, null, null,
 				  $post_args);
 	return $feed->entries[0];
     }
@@ -182,13 +195,14 @@ class FriendFeed {
 
     // Internal function to download, parse, and process FriendFeed feeds.
     function fetch_feed($uri, $service, $start, $num, $nickname=null,
-			$post_args=null) {
+			$query=null, $post_args=null) {
 	$url_args = array(
 	    "service" => $service,
 	    "start" => $start,
 	    "num" => $num,
         );
 	if ($nickname) $url_args["nickname"] = $nickname;
+	if ($query) $url_args["q"] = $query;
 	$feed = $this->fetch($uri, $url_args, $post_args);
 
 	// Parse all the dates in the feed
@@ -261,6 +275,7 @@ function test_friendfeed() {
     // $feed = $session->fetch_user_feed("bret");
     // $feed = $session->fetch_user_feed("paul", "twitter");
     // $feed = $session->fetch_multi_user_feed(array("bret", "paul", "jim"));
+    // $feed = $session->search("who:bret friendfeed");
     foreach ($feed->entries as $entry) {
 	print($entry->title . "\n");
     }
@@ -288,5 +303,7 @@ function test_friendfeed() {
         print("Posted images at http://friendfeed.com/e/" . $entry->id . "\n");
     }
 }
+
+test_friendfeed();
 
 ?>
