@@ -73,10 +73,28 @@ class FriendFeed(object):
     def fetch_user_feed(self, nickname, **kwargs):
         """Returns the entries shared by the user with the given nickname.
 
-        Authentication is required if the user's feed is not public. Supported
-        keyword arguments are service, start, and num.
+        Authentication is required if the user's feed is not public.
         """
-        return self._fetch_feed("/api/feed/user", nickname=nickname, **kwargs)
+        return self._fetch_feed(
+            "/api/feed/user/" + urllib.quote_plus(nickname), **kwargs)
+
+    def fetch_user_comments_feed(self, nickname, **kwargs):
+        """Returns the entries the given user has commented on."""
+        return self._fetch_feed(
+            "/api/feed/user/" + urllib.quote_plus(nickname) + "/comments",
+            **kwargs)
+
+    def fetch_user_likes_feed(self, nickname, **kwargs):
+        """Returns the entries the given user has "liked"."""
+        return self._fetch_feed(
+            "/api/feed/user/" + urllib.quote_plus(nickname) + "/likes",
+            **kwargs)
+
+    def fetch_user_discussion_feed(self, nickname, **kwargs):
+        """Returns the entries the given user has commented on or "liked"."""
+        return self._fetch_feed(
+            "/api/feed/user/" + urllib.quote_plus(nickname) + "/discussion",
+            **kwargs)
 
     def fetch_multi_user_feed(self, nicknames, **kwargs):
         """Returns a merged feed with all of the given users' entries.
@@ -220,7 +238,7 @@ class FriendFeed(object):
         return result
 
     def _fetch(self, uri, post_args, **url_args):
-        url_args["output"] = "json"
+        url_args["format"] = "json"
         args = urllib.urlencode(url_args)
         url = "http://friendfeed.com" + uri + "?" + args
         if post_args is not None:
@@ -250,6 +268,7 @@ def _example():
     feed = session.fetch_public_feed()
     # feed = session.fetch_user_feed("bret")
     # feed = session.fetch_user_feed("paul", service="twitter")
+    # feed = session.fetch_user_discussion_feed("bret")
     # feed = session.fetch_multi_user_feed(["bret", "paul", "jim"])
     # feed = session.search("who:bret friendfeed")
     for entry in feed["entries"]:

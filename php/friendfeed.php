@@ -54,8 +54,32 @@ class FriendFeed {
     //
     // Authentication is required if the user's feed is not public.
     function fetch_user_feed($nickname, $service=null, $start=0, $num=30) {
-	return $this->fetch_feed("/api/feed/user", $service, $start, $num,
-				 urlencode($nickname));
+	return $this->fetch_feed("/api/feed/user/" . urlencode($nickname),
+				 $service, $start, $num);
+    }
+
+    // Returns the most recent entries the given user has commented on.
+    function fetch_user_comments_feed($nickname, $service=null, $start=0,
+				      $num=30) {
+	return $this->fetch_feed(
+	    "/api/feed/user/" . urlencode($nickname) . "/comments",
+	    $service, $start, $num);
+    }
+
+    // Returns the most recent entries the given user has "liked."
+    function fetch_user_likes_feed($nickname, $service=null, $start=0,
+				   $num=30) {
+	return $this->fetch_feed(
+	    "/api/feed/user/" . urlencode($nickname) . "/likes",
+	    $service, $start, $num);
+    }
+
+    // Returns the most recent entries the given user has "liked."
+    function fetch_user_discussion_feed($nickname, $service=null, $start=0,
+					$num=30) {
+	return $this->fetch_feed(
+	    "/api/feed/user/" . urlencode($nickname) . "/discussion",
+	    $service, $start, $num);
     }
 
     // Returns a merged feed with all of the given users' entries.
@@ -222,7 +246,7 @@ class FriendFeed {
     // Performs an authenticated FF request, parsing the JSON response.
     function fetch($uri, $url_args=null, $post_args=null) {
 	if (!$url_args) $url_args = array();
-	$url_args["output"] = "json";
+	$url_args["format"] = "json";
 	$pairs = array();
 	foreach ($url_args as $name => $value) {
 	    $pairs[] = $name . "=" . urlencode($value);
@@ -274,6 +298,7 @@ function test_friendfeed() {
     $feed = $session->fetch_public_feed();
     // $feed = $session->fetch_user_feed("bret");
     // $feed = $session->fetch_user_feed("paul", "twitter");
+    // $feed = $session->fetch_user_discussion_feed("bret");
     // $feed = $session->fetch_multi_user_feed(array("bret", "paul", "jim"));
     // $feed = $session->search("who:bret friendfeed");
     foreach ($feed->entries as $entry) {
@@ -303,7 +328,5 @@ function test_friendfeed() {
         print("Posted images at http://friendfeed.com/e/" . $entry->id . "\n");
     }
 }
-
-test_friendfeed();
 
 ?>
