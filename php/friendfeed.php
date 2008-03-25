@@ -32,7 +32,7 @@ assert(function_exists("curl_init"));
 //     $friendfeed = new FriendFeed($_GET["nickname"], $_GET["auth_key"]);
 //     $entry = $friendfeed->publish_message("Testing the FriendFeed API");
 // 
-// Users can get their remote key from http://friendfeed.com/account/api. You
+// Users can get their remote key from http://friendfeed.com/remotekey. You
 // should direct users who don't know their remote key to that page.
 // For guidelines on user interface and terminology, check out
 // http://friendfeed.com/api/guidelines.
