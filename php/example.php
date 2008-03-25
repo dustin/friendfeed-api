@@ -57,6 +57,10 @@ if ($_POST["title"]) {
         color: #1030cc;
       }
 
+      img {
+        border: 0;
+      }
+
       table.form td {
         padding-right: 0.5em;
         padding-bottom: 0.5em;
@@ -67,7 +71,7 @@ if ($_POST["title"]) {
   <body>
     <table>
       <tr>
-        <td><img src="http://friendfeed.com/static/images/logo.png" width="256" height="55"/></td>
+        <td><a href="http://friendfeed.com/" target="_blank"><img src="http://friendfeed.com/static/images/logo.png" width="256" height="55"/></a></td>
 	<td style="padding-left: 1.5em">
 	  <h1>API Example Application</h1>
 	  <div style="font-size: 8pt; color: gray">Not affiliated with FriendFeed - a demonstration of the <a href="http://friendfeed.com/api/" style="color: #7777cc">FriendFeed API</a></div>
