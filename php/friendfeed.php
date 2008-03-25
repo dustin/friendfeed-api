@@ -228,6 +228,7 @@ class FriendFeed {
 	if ($nickname) $url_args["nickname"] = $nickname;
 	if ($query) $url_args["q"] = $query;
 	$feed = $this->fetch($uri, $url_args, $post_args);
+	if (!$feed) return null;
 
 	// Parse all the dates in the feed
 	foreach ($feed->entries as $entry) {
