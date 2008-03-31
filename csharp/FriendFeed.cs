@@ -48,8 +48,6 @@ namespace FriendFeed {
       remoteKey_ = remoteKey;
     }
 
-
-
     /// <summary>
     /// Publishes the given message to the authenticated user's feed.
     /// </summary>
@@ -112,18 +110,18 @@ namespace FriendFeed {
       }
       if (imageUrls != null) {
         for (int i = 0; i < imageUrls.Length; i++) {
-          postArguments["image" + i + "_url"] = imageUrls[i].url;
-          if (imageUrls[i].link != null) {
-            postArguments["image" + i + "_link"] = imageUrls[i].url;
+          postArguments["image" + i + "_url"] = imageUrls[i].Url;
+          if (imageUrls[i].Link != null) {
+            postArguments["image" + i + "_link"] = imageUrls[i].Url;
           }
         }
       }
       SortedDictionary<string, string> fileAttachments = new SortedDictionary<string, string>();
       if (imageFiles != null) {
         for (int i = 0; i < imageFiles.Length; i++) {
-          fileAttachments["file" + i] = imageFiles[i].path;
-          if (imageFiles[i].link != null) {
-            postArguments["file" + i + "_link"] = imageUrls[i].url;
+          fileAttachments["file" + i] = imageFiles[i].Path;
+          if (imageFiles[i].Link != null) {
+            postArguments["file" + i + "_link"] = imageUrls[i].Url;
           }
         }
       }
@@ -293,8 +291,8 @@ namespace FriendFeed {
   }
 
   class ThumbnailUrl {
-    public string url;
-    public string link;
+    public string Url;
+    public string Link;
 
     /// <summary>
     /// Creates an entry thumbnail from the image at the given URL.
@@ -304,7 +302,7 @@ namespace FriendFeed {
     /// the other constructor.
     /// </summary>
     public ThumbnailUrl(string url) {
-      this.url = url;
+      this.Url = url;
     }
 
     /// <summary>
@@ -313,14 +311,14 @@ namespace FriendFeed {
     /// The thumbnail image will link to the given link URL.
     /// </summary>
     public ThumbnailUrl(string url, string link) {
-      this.url = url;
-      this.link = link;
+      this.Url = url;
+      this.Link = link;
     }
   }
 
   class ThumbnailFile {
-    public string path;
-    public string link;
+    public string Path;
+    public string Link;
 
     /// <summary>
     /// Creates an entry thumbnail from the file at the given path.
@@ -330,7 +328,7 @@ namespace FriendFeed {
     /// the other constructor.
     /// </summary>
     public ThumbnailFile(string path) {
-      this.path = path;
+      this.Path = path;
     }
 
     /// <summary>
@@ -339,8 +337,8 @@ namespace FriendFeed {
     /// The thumbnail image will link to the given link URL.
     /// </summary>
     public ThumbnailFile(string path, string link) {
-      this.path = path;
-      this.link = link;
+      this.Path = path;
+      this.Link = link;
     }
   }
 
