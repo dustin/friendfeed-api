@@ -106,7 +106,7 @@ class FriendFeed {
     // not authenticated, the default scope is over all public entries.
     //
     // The query syntax is the same syntax as
-    // http://friendfeed.com/advancedsearch
+    // http://friendfeed.com/search/advanced
     function search($query, $service=null, $start=0, $num=30) {
 	return $this->fetch_feed("/api/feed/search", $service, $start, $num,
 				 null, $query);

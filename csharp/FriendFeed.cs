@@ -27,7 +27,7 @@ namespace FriendFeed {
   /// 
   /// More information about the API is available at http://friendfeed.com/api/.
   /// </summary>
-  class FriendFeedClient {
+  public class FriendFeedClient {
     private string nickname_;
     private string remoteKey_;
 
@@ -290,7 +290,7 @@ namespace FriendFeed {
     }
   }
 
-  class ThumbnailUrl {
+  public class ThumbnailUrl {
     public string Url;
     public string Link;
 
@@ -316,7 +316,7 @@ namespace FriendFeed {
     }
   }
 
-  class ThumbnailFile {
+  public class ThumbnailFile {
     public string Path;
     public string Link;
 
@@ -342,7 +342,7 @@ namespace FriendFeed {
     }
   }
 
-  class Feed {
+  public class Feed {
     public List<Entry> Entries;
 
     public Feed(XmlElement element) {
@@ -353,7 +353,7 @@ namespace FriendFeed {
     }
   }
 
-  class Entry {
+  public class Entry {
     public string Id;
     public string Title;
     public string Link;
@@ -388,7 +388,7 @@ namespace FriendFeed {
     }
   }
 
-  class User {
+  public class User {
     public string Id;
     public string Nickname;
     public string ProfileUrl;
@@ -400,7 +400,7 @@ namespace FriendFeed {
     }
   }
 
-  class Service {
+  public class Service {
     public string Id;
     public string Name;
     public string IconUrl;
@@ -414,7 +414,7 @@ namespace FriendFeed {
     }
   }
 
-  class Like {
+  public class Like {
     public DateTime Date;
     public User User;
 
@@ -424,7 +424,7 @@ namespace FriendFeed {
     }
   }
 
-  class Comment {
+  public class Comment {
     public DateTime Date;
     public User User;
     public string Body;
@@ -436,7 +436,7 @@ namespace FriendFeed {
     }
   }
 
-  class Media {
+  public class Media {
     public string Title;
     public string Player;
     public List<Thumbnail> Thumbnails;
@@ -456,7 +456,7 @@ namespace FriendFeed {
     }
   }
 
-  class Thumbnail {
+  public class Thumbnail {
     public string Url;
     public string Width;
     public string Height;
@@ -468,7 +468,7 @@ namespace FriendFeed {
     }
   }
 
-  class Content {
+  public class Content {
     public string Url;
     public string Type;
     public string Width;
