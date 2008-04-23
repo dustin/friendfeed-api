@@ -100,6 +100,20 @@ namespace FriendFeed {
     /// <param name="imagePaths">Paths to local image files to be included as thumbnails with this entry</param>
     /// <returns>The new entry as returned by the server</returns>
     public Entry PublishLink(string title, string link, string comment, ThumbnailUrl[] imageUrls, ThumbnailFile[] imageFiles) {
+      return PublishLink(title, link, comment, imageUrls, imageFiles, null);
+    }
+
+    /// <summary>
+    /// Publishes the given link to the authenticated user's feed.
+    /// </summary>
+    /// <param name="title">The title of the link</param>
+    /// <param name="link">The link URL</param>
+    /// <param name="comment">The initial comment for this entry</param>
+    /// <param name="imageUrls">URLs of the thumbnails to be included with this entry</param>
+    /// <param name="imagePaths">Paths to local image files to be included as thumbnails with this entry</param>
+    /// <param name="via">The ID of the API client sending this request</param>
+    /// <returns>The new entry as returned by the server</returns>
+    public Entry PublishLink(string title, string link, string comment, ThumbnailUrl[] imageUrls, ThumbnailFile[] imageFiles, string via) {
       SortedDictionary<string, string> postArguments = new SortedDictionary<string, string>();
       postArguments["title"] = title;
       if (link != null) {
@@ -107,6 +121,9 @@ namespace FriendFeed {
       }
       if (comment != null) {
         postArguments["comment"] = comment;
+      }
+      if (via != null) {
+	postArguments["via"] = via;
       }
       if (imageUrls != null) {
         for (int i = 0; i < imageUrls.Length; i++) {

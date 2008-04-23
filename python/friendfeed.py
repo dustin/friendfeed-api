@@ -133,7 +133,7 @@ class FriendFeed(object):
         return self.publish_link(title=message, link=None, **kwargs)
 
     def publish_link(self, title, link, comment=None, image_urls=[],
-                     images=[]):
+                     images=[], via=None):
         """Publishes the given link/title to the authenticated user's feed.
 
         Authentication is always required.
@@ -166,6 +166,8 @@ class FriendFeed(object):
             post_args["link"] = link
         if comment:
             post_args["comment"] = comment
+        if via:
+            post_args["via"] = via
         for image_url in image_urls:
             images.append({"url": image_url})
         for i, image in enumerate(images):
@@ -175,16 +177,18 @@ class FriendFeed(object):
         feed = self._fetch_feed("/api/share", post_args=post_args)
         return feed["entries"][0]
 
-    def add_comment(self, entry_id, body):
+    def add_comment(self, entry_id, body, via=None):
         """Adds the given comment to the entry with the given ID.
 
         We return the ID of the new comment, which can be used to edit or
         delete the comment.
         """
-        result = self._fetch("/api/comment", {
+        args = {
             "entry": entry_id,
             "body": body
-        })
+        }
+        if via: args["via"] = via
+        result = self._fetch("/api/comment", args)
         return result["id"]
 
     def edit_comment(self, entry_id, comment_id, body):

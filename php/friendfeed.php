@@ -136,10 +136,11 @@ class FriendFeed {
     // which includes the final thumbnail URLs as well as the ID for the
     // new entry.
     function publish_link($title, $link, $comment=null, $image_urls=null,
-			  $images=null) {
+			  $images=null, $via=null) {
 	$post_args = array("title" => $title);
 	if ($link) $post_args["link"] = $link;
 	if ($comment) $post_args["comment"] = $comment;
+	if ($via) $post_args["via"] = $via;
 
 	$post_images = array();
 	if ($image_urls) {
