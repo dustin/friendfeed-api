@@ -168,6 +168,7 @@ class FriendFeed(object):
             post_args["comment"] = comment
         if via:
             post_args["via"] = via
+        images = images[:]
         for image_url in image_urls:
             images.append({"url": image_url})
         for i, image in enumerate(images):
