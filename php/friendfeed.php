@@ -132,11 +132,18 @@ class FriendFeed {
     // name-associated arrays of the form array("url"=>...,"link"=>...).
     // The thumbnail with the given url will link to the specified link.
     //
+    // audio_urls is a list of MP3 URLs that will show up as a play
+    // button beneath the link. You can optionally supply audio[]
+    // instead, which should be a list of name-associated arrays of the 
+    // form ("url"=> ..., "title"=> ...). The given title will appear when
+    // the audio file is played.
+    //
     // We return the parsed/published entry as returned from the server,
     // which includes the final thumbnail URLs as well as the ID for the
     // new entry.
     function publish_link($title, $link, $comment=null, $image_urls=null,
-			  $images=null, $via=null) {
+			  $images=null, $via=null, $audio_urls=null,
+			  $audio=null) {
 	$post_args = array("title" => $title);
 	if ($link) $post_args["link"] = $link;
 	if ($comment) $post_args["comment"] = $comment;
@@ -158,6 +165,25 @@ class FriendFeed {
 	    $post_args["image" . $i . "_url"] = $image["url"];
 	    if ($image["link"]) {
 		$post_args["image" . $i . "_link"] = $image["link"];
+	    }
+	}
+
+	$post_audio = array();
+	if ($audio_urls) {
+	    foreach ($audio_urls as $url) {
+		$post_audio[] = array("url" => $url);
+	    }
+	}
+	if ($audio) {
+	    foreach ($audio as $clip) {
+		$post_audio[] = $clip;
+	    }
+	}
+	for ($i = 0; $i < count($post_audio); $i++) {
+	    $clip = $post_audio[$i];
+	    $post_args["audio" . $i . "_url"] = $clip["url"];
+	    if ($clip["title"]) {
+		$post_args["audio" . $i . "_title"] = $clip["link"];
 	    }
 	}
 
