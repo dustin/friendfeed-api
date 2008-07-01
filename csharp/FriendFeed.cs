@@ -152,7 +152,7 @@ namespace FriendFeed {
         for (int i = 0; i < audioUrls.Length; i++) {
           postArguments["audio" + i + "_url"] = audioUrls[i].Url;
           if (audioUrls[i].Title != null) {
-            postArguments["audio" + i + "_title"] = audioUrls[i].Url;
+            postArguments["audio" + i + "_title"] = audioUrls[i].Title;
           }
         }
       }
