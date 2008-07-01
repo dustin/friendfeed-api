@@ -114,6 +114,21 @@ namespace FriendFeed {
     /// <param name="via">The ID of the API client sending this request</param>
     /// <returns>The new entry as returned by the server</returns>
     public Entry PublishLink(string title, string link, string comment, ThumbnailUrl[] imageUrls, ThumbnailFile[] imageFiles, string via) {
+      return PublishLink(title, link, comment, imageUrls, imageFiles, via, null);
+    }
+
+    /// <summary>
+    /// Publishes the given link to the authenticated user's feed.
+    /// </summary>
+    /// <param name="title">The title of the link</param>
+    /// <param name="link">The link URL</param>
+    /// <param name="comment">The initial comment for this entry</param>
+    /// <param name="imageUrls">URLs of the thumbnails to be included with this entry</param>
+    /// <param name="imagePaths">Paths to local image files to be included as thumbnails with this entry</param>
+    /// <param name="via">The ID of the API client sending this request</param>
+    /// <param name="audioUrls">URLs of the mp3 files to be included with this entry</param>
+    /// <returns>The new entry as returned by the server</returns>
+    public Entry PublishLink(string title, string link, string comment, ThumbnailUrl[] imageUrls, ThumbnailFile[] imageFiles, string via, AudioUrl[] audioUrls) {
       SortedDictionary<string, string> postArguments = new SortedDictionary<string, string>();
       postArguments["title"] = title;
       if (link != null) {
@@ -130,6 +145,14 @@ namespace FriendFeed {
           postArguments["image" + i + "_url"] = imageUrls[i].Url;
           if (imageUrls[i].Link != null) {
             postArguments["image" + i + "_link"] = imageUrls[i].Url;
+          }
+        }
+      }
+      if (audioUrls != null) {
+        for (int i = 0; i < audioUrls.Length; i++) {
+          postArguments["audio" + i + "_url"] = audioUrls[i].Url;
+          if (audioUrls[i].Title != null) {
+            postArguments["audio" + i + "_title"] = audioUrls[i].Url;
           }
         }
       }
@@ -304,6 +327,30 @@ namespace FriendFeed {
         parts[i++] = HttpUtility.UrlEncode(pair.Key) + "=" + HttpUtility.UrlEncode(pair.Value);
       }
       return string.Join("&", parts);
+    }
+  }
+
+  public class AudioUrl {
+    public string Url;
+    public string Title;
+
+    /// <summary>
+    /// Links an audio file at the given URL to an entry.
+    /// 
+    /// If no title is set, the entry title will be shown while playing.
+    /// </summary>
+    public AudioUrl(string url) {
+      this.Url = url;
+    }
+
+    /// <summary>
+    /// Links an audio file at the given URL to an entry.
+    /// 
+    /// The given title will be shown while the file is playing.
+    /// </summary>
+    public AudioUrl(string url, string title) {
+      this.Url = url;
+      this.Title = title;
     }
   }
 
