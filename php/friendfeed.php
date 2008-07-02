@@ -143,11 +143,12 @@ class FriendFeed {
     // new entry.
     function publish_link($title, $link, $comment=null, $image_urls=null,
 			  $images=null, $via=null, $audio_urls=null,
-			  $audio=null) {
+			  $audio=null, $room=null) {
 	$post_args = array("title" => $title);
 	if ($link) $post_args["link"] = $link;
 	if ($comment) $post_args["comment"] = $comment;
 	if ($via) $post_args["via"] = $via;
+	if ($room) $post_args["room"] = $room;
 
 	$post_images = array();
 	if ($image_urls) {

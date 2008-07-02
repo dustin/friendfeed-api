@@ -129,6 +129,22 @@ namespace FriendFeed {
     /// <param name="audioUrls">URLs of the mp3 files to be included with this entry</param>
     /// <returns>The new entry as returned by the server</returns>
     public Entry PublishLink(string title, string link, string comment, ThumbnailUrl[] imageUrls, ThumbnailFile[] imageFiles, string via, AudioUrl[] audioUrls) {
+      return PublishLink(title, link, comment, imageUrls, imageFiles, via, audioUrls, none);
+    }
+
+    /// <summary>
+    /// Publishes the given link to the authenticated user's feed.
+    /// </summary>
+    /// <param name="title">The title of the link</param>
+    /// <param name="link">The link URL</param>
+    /// <param name="comment">The initial comment for this entry</param>
+    /// <param name="imageUrls">URLs of the thumbnails to be included with this entry</param>
+    /// <param name="imagePaths">Paths to local image files to be included as thumbnails with this entry</param>
+    /// <param name="via">The ID of the API client sending this request</param>
+    /// <param name="audioUrls">URLs of the mp3 files to be included with this entry</param>
+    /// <param name="room">The room to post this entry to</param>
+    /// <returns>The new entry as returned by the server</returns>
+    public Entry PublishLink(string title, string link, string comment, ThumbnailUrl[] imageUrls, ThumbnailFile[] imageFiles, string via, AudioUrl[] audioUrls, string room) {
       SortedDictionary<string, string> postArguments = new SortedDictionary<string, string>();
       postArguments["title"] = title;
       if (link != null) {
@@ -139,6 +155,9 @@ namespace FriendFeed {
       }
       if (via != null) {
 	postArguments["via"] = via;
+      }
+      if (room != null) {
+	postArguments["room"] = room;
       }
       if (imageUrls != null) {
         for (int i = 0; i < imageUrls.Length; i++) {
