@@ -214,10 +214,10 @@ namespace FriendFeed {
       return FetchHomeFeed(null);
     }
     public Feed FetchHomeFeed(string service) {
-      return FetchHomeFeed(null, 0);
+      return FetchHomeFeed(service, 0);
     }
     public Feed FetchHomeFeed(string service, int start) {
-      return FetchHomeFeed(null, 0, 30);
+      return FetchHomeFeed(service, start, 30);
     }
     public Feed FetchHomeFeed(string service, int start, int num) {
       return FetchFeed("/api/feed/home", service, start, num);
