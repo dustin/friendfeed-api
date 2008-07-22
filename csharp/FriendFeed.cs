@@ -129,7 +129,7 @@ namespace FriendFeed {
     /// <param name="audioUrls">URLs of the mp3 files to be included with this entry</param>
     /// <returns>The new entry as returned by the server</returns>
     public Entry PublishLink(string title, string link, string comment, ThumbnailUrl[] imageUrls, ThumbnailFile[] imageFiles, string via, AudioUrl[] audioUrls) {
-      return PublishLink(title, link, comment, imageUrls, imageFiles, via, audioUrls, none);
+      return PublishLink(title, link, comment, imageUrls, imageFiles, via, audioUrls, null);
     }
 
     /// <summary>
@@ -455,7 +455,7 @@ namespace FriendFeed {
       Published = DateTime.Parse(Util.ChildValue(element, "published"));
       Updated = DateTime.Parse(Util.ChildValue(element, "updated"));
       User = new User(Util.ChildElement(element, "user"));
-      Service = new Service(Util.ChildElement(element, "user"));
+      Service = new Service(Util.ChildElement(element, "service"));
       Comments = new List<Comment>();
       foreach (XmlElement child in element.GetElementsByTagName("comment")) {
         Comments.Add(new Comment(child));
