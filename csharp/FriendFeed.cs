@@ -431,7 +431,10 @@ namespace FriendFeed {
     public Feed(XmlElement element) {
       Entries = new List<Entry>();
       foreach (XmlElement child in element.ChildNodes) {
-        Entries.Add(new Entry(child));
+        // Ignore non-entry elements
+        if (child.Name.Equals("entry")) {
+          Entries.Add(new Entry(child));
+        }
       }
     }
   }
