@@ -263,7 +263,7 @@ class FriendFeed(object):
         args = urllib.urlencode(url_args)
         url = "http://friendfeed.com" + uri + "?" + args
         if post_args is not None:
-            request = urllib2.Request(url, urllib.urlencode(post_args))
+            request = urllib2.Request(url, self._urlencode(post_args))
         else:
             request = urllib2.Request(url)
         if self.auth_nickname and self.auth_key:
@@ -274,6 +274,14 @@ class FriendFeed(object):
         data = stream.read()
         stream.close()
         return parse_json(data)
+
+    def _urlencode(self, h):
+        rv = []
+        for k,v in h.iteritems():
+            rv.append(u'%s=%s' %
+                (urllib.quote(k.encode("utf-8")),
+                urllib.quote(v.encode("utf-8"))))
+        return u'&'.join(rv)
 
     def _parse_date(self, date_str):
         rfc3339_date = "%Y-%m-%dT%H:%M:%SZ"
